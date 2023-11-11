@@ -81,7 +81,7 @@ public class EventViewer implements IDataEventListener, DetectorListener, Action
     private int ccdbRunNumber = 0;
     private int eventCounter = 0;
     private int histoResetEvents = 0;
-    BenchmarkTimer timer = new BenchmarkTimer("mon12");
+    BenchmarkTimer timer = new BenchmarkTimer("RICHmon");
 
     private String defaultEtHost = null;
     private String defaultEtIp = null;
@@ -95,28 +95,29 @@ public class EventViewer implements IDataEventListener, DetectorListener, Action
     public LinkedHashMap<String, DetectorMonitor> monitors = new LinkedHashMap<>();
  
     public final void initMonitors() {
-        this.monitors.put("BAND",        new BANDmonitor("BAND"));
-        this.monitors.put("BMT",         new BMTmonitor("BMT"));
-        this.monitors.put("BST",         new BSTmonitor("BST"));
-        this.monitors.put("CND",         new CNDmonitor("CND")); 
-        this.monitors.put("CTOF",        new CTOFmonitor("CTOF")); 
-        this.monitors.put("DC",          new DCmonitor("DC"));     
-        this.monitors.put("ECAL",        new ECmonitor("ECAL"));       
-        this.monitors.put("FMT",         new FMTmonitor("FMT"));      
-        this.monitors.put("FTCAL",       new FTCALmonitor("FTCAL"));   
-        this.monitors.put("FTHODO",      new FTHODOmonitor("FTHODO")); 
+//        this.monitors.put("BAND",        new BANDmonitor("BAND"));
+//        this.monitors.put("BMT",         new BMTmonitor("BMT"));
+//        this.monitors.put("BST",         new BSTmonitor("BST"));
+//        this.monitors.put("CND",         new CNDmonitor("CND")); 
+//        this.monitors.put("CTOF",        new CTOFmonitor("CTOF")); 
+//        this.monitors.put("DC",          new DCmonitor("DC"));     
+//        this.monitors.put("ECAL",        new ECmonitor("ECAL"));       
+//        this.monitors.put("FMT",         new FMTmonitor("FMT"));      
+//        this.monitors.put("FTCAL",       new FTCALmonitor("FTCAL"));   
+//        this.monitors.put("FTHODO",      new FTHODOmonitor("FTHODO")); 
         this.monitors.put("FTOF",        new FTOFmonitor("FTOF"));             
-        this.monitors.put("FTTRK",       new FTTRKmonitor("FTTRK"));   
-        this.monitors.put("HTCC",        new HTCCmonitor("HTCC"));     
-        this.monitors.put("LTCC",        new LTCCmonitor("LTCC")); 
-        this.monitors.put("RASTER",      new RASTERmonitor("RASTER"));    
+//        this.monitors.put("FTTRK",       new FTTRKmonitor("FTTRK"));   
+//        this.monitors.put("HTCC",        new HTCCmonitor("HTCC"));     
+ //       this.monitors.put("LTCC",        new LTCCmonitor("LTCC")); 
+ //       this.monitors.put("RASTER",      new RASTERmonitor("RASTER")); 
+           
         this.monitors.put("RICH",        new RICHmonitor("RICH"));    
-        this.monitors.put("RTPC",        new RTPCmonitor("RTPC"));    
-        this.monitors.put("RF",          new RFmonitor("RF"));       
-        this.monitors.put("HEL",         new HELmonitor("HEL"));      
-        this.monitors.put("FCUP",        new FCUPmonitor("FCUP")); 
+//        this.monitors.put("RTPC",        new RTPCmonitor("RTPC"));    
+//        this.monitors.put("RF",          new RFmonitor("RF"));       
+//        this.monitors.put("HEL",         new HELmonitor("HEL"));      
+//        this.monitors.put("FCUP",        new FCUPmonitor("FCUP")); 
         this.monitors.put("Trigger",     new TRIGGERmonitor("Trigger"));
-        this.monitors.put("TimeJitter",  new TJITTERmonitor("TimeJitter"));
+//        this.monitors.put("TimeJitter",  new TJITTERmonitor("TimeJitter"));
     }
                     
     public EventViewer(String host, String ip) {  
@@ -136,7 +137,7 @@ public class EventViewer implements IDataEventListener, DetectorListener, Action
     
     public void init() {
         this.initsPaths();
-        this.initSummary();
+//        this.initSummary();
         this.initTabs();
         this.initMenus();
     }
@@ -249,7 +250,7 @@ public class EventViewer implements IDataEventListener, DetectorListener, Action
         String dir = ClasUtilsFile.getResourceDir("CLAS12DIR", "etc/bankdefs/hipo4");
         this.schemaFactory.initFromDirectory(dir);
         if (this.outputDirectory == null) {
-            this.outputDirectory = System.getProperty("user.home") + "/CLAS12MON/output";
+            this.outputDirectory = System.getProperty("user.home") + "/RICHmon/output";
         }
         System.out.println("Output directory set to: " + this.outputDirectory);
     }
@@ -623,6 +624,8 @@ public class EventViewer implements IDataEventListener, DetectorListener, Action
     }
 
     public void plotSummaries() {
+    	
+    	if(true) return;
         
         /// FD:
         if(this.CLAS12Canvas!=null && this.CLAS12Canvas.getCanvas("FD")!=null) {
@@ -820,9 +823,9 @@ public class EventViewer implements IDataEventListener, DetectorListener, Action
 
     public static void main(String[] args){
         
-        OptionParser parser = new OptionParser("mon12");
+        OptionParser parser = new OptionParser("RICHmon");
         parser.setRequiresInputList(false);
-        parser.setDescription("CLAS12 monitoring app");
+        parser.setDescription("RICH Detector monitoring app");
         parser.addOption("-geometry", "1600x1000",      "Select window size, e.g. 1600x1200");
         parser.addOption("-tabs",     "All",            "Select active tabs, e.g. BST:FTOF");
         parser.addOption("-logbook",  "HBLOG",          "Select electronic logbook");
@@ -890,7 +893,7 @@ public class EventViewer implements IDataEventListener, DetectorListener, Action
 
         // Finally, start the GUI:
         viewer.init();
-        JFrame frame = new JFrame("MON12");
+        JFrame frame = new JFrame("RICHmon");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(viewer.mainPanel);
         frame.setJMenuBar(viewer.menuBar);
